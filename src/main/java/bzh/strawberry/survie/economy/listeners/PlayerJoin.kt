@@ -31,12 +31,12 @@ class PlayerJoin(plugin: Plugin) : Listener {
                 run {
                     try {
                         val connection = StrawAPI.getAPI().dataFactory.dataSource.connection
-                        val preparedStatement = connection.prepareStatement("SELECT * FROM survie_money WHERE elid = ?")
-                        preparedStatement.setInt(1, 0)
+                        val preparedStatement = connection.prepareStatement("SELECT * FROM survie_money WHERE survie_id = ?")
+                        preparedStatement.setInt(1, surviePlayer.survieID)
                         val resultSet = preparedStatement.executeQuery()
                         if (!resultSet.next()) {
-                            val insert = connection.prepareStatement("INSERT INTO survie_money (elid) VALUES (?)")
-                            insert.setInt(1, 0)
+                            val insert = connection.prepareStatement("INSERT INTO survie_money (survie_id) VALUES (?)")
+                            insert.setInt(1, surviePlayer.survieID)
                             insert.executeUpdate()
                             insert.close()
                             surviePlayer.balance = 0.0

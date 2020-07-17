@@ -32,8 +32,8 @@ class Account(plugin: Plugin) {
         else {
             try {
                 val connection = StrawAPI.getAPI().dataFactory.dataSource.connection
-                val preparedStatement = connection.prepareStatement("SELECT * FROM survie_money WHERE elid = ?")
-                preparedStatement.setInt(1, 0)
+                val preparedStatement = connection.prepareStatement("SELECT * FROM survie_money WHERE survie_id = ?")
+                preparedStatement.setInt(1, Survie.SURVIE.getSurvieIdByUUID(uuid))
                 val resultSet = preparedStatement.executeQuery()
                 if (resultSet.next()) {
                     balance = resultSet.getDouble("balance")
@@ -57,14 +57,14 @@ class Account(plugin: Plugin) {
                     surviePlayer.balance = surviePlayer.balance - v
                 try {
                     val connection = StrawAPI.getAPI().dataFactory.dataSource.connection
-                    var preparedStatement = connection.prepareStatement("UPDATE survie_money SET balance = balance - ? WHERE elid = ?")
+                    var preparedStatement = connection.prepareStatement("UPDATE survie_money SET balance = balance - ? WHERE survie_id = ?")
                     preparedStatement.setDouble(1, v)
-                    preparedStatement.setInt(2, 0)
+                    preparedStatement.setInt(2, Survie.SURVIE.getSurvieIdByUUID(uuid))
                     preparedStatement.executeUpdate()
                     preparedStatement.close()
 
                     preparedStatement = connection.prepareStatement("INSERT INTO survie_transaction (player_id, montant) VALUES (?, ?)")
-                    preparedStatement.setInt(1, surviePlayer.survieID)
+                    preparedStatement.setInt(1, Survie.SURVIE.getSurvieIdByUUID(uuid))
                     preparedStatement.setDouble(2, -v)
                     preparedStatement.executeUpdate()
                     preparedStatement.close()
@@ -84,14 +84,14 @@ class Account(plugin: Plugin) {
                     surviePlayer.balance = surviePlayer.balance + v
                 try {
                     val connection = StrawAPI.getAPI().dataFactory.dataSource.connection
-                    var preparedStatement = connection.prepareStatement("UPDATE survie_money SET balance = balance + ? WHERE elid = ?")
+                    var preparedStatement = connection.prepareStatement("UPDATE survie_money SET balance = balance + ? WHERE survie_id = ?")
                     preparedStatement.setDouble(1, v)
-                    preparedStatement.setInt(2, 0)
+                    preparedStatement.setInt(2, Survie.SURVIE.getSurvieIdByUUID(uuid))
                     preparedStatement.executeUpdate()
                     preparedStatement.close()
 
                     preparedStatement = connection.prepareStatement("INSERT INTO survie_transaction (player_id, montant) VALUES (?, ?)")
-                    preparedStatement.setInt(1, surviePlayer.survieID)
+                    preparedStatement.setInt(1, Survie.SURVIE.getSurvieIdByUUID(uuid))
                     preparedStatement.setDouble(2, v)
                     preparedStatement.executeUpdate()
                     preparedStatement.close()
@@ -111,14 +111,14 @@ class Account(plugin: Plugin) {
                     surviePlayer.balance = v
                 try {
                     val connection = StrawAPI.getAPI().dataFactory.dataSource.connection
-                    var preparedStatement = connection.prepareStatement("UPDATE survie_money SET balance = ? WHERE elid = ?")
+                    var preparedStatement = connection.prepareStatement("UPDATE survie_money SET balance = ? WHERE survie_id = ?")
                     preparedStatement.setDouble(1, v)
-                    preparedStatement.setInt(2, 0)
+                    preparedStatement.setInt(2, Survie.SURVIE.getSurvieIdByUUID(uuid))
                     preparedStatement.executeUpdate()
                     preparedStatement.close()
 
                     preparedStatement = connection.prepareStatement("INSERT INTO survie_transaction (player_id, montant) VALUES (?, ?)")
-                    preparedStatement.setInt(1, surviePlayer.survieID)
+                    preparedStatement.setInt(1, Survie.SURVIE.getSurvieIdByUUID(uuid))
                     preparedStatement.setDouble(2, +v)
                     preparedStatement.executeUpdate()
                     preparedStatement.close()

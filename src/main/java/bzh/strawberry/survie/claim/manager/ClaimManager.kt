@@ -34,7 +34,7 @@ class ClaimManager {
     private fun loadClaim() {
         try {
             val connecion = StrawAPI.getAPI().dataFactory.dataSource.connection
-            val preparedStatement: PreparedStatement = connecion.prepareStatement("SELECT C.id, C.owner, C.world, C.cuboid, C.created_at, C.updated_at, C.name, C.taxe, C.bank, C.taxe_etat, C.taille, C.welcome, C.farewell, C.warp ,A.uuid FROM survie_claims C, survie_player P, elenoxauthenticator A WHERE C.owner = P.id AND P.elid = A.id")
+            val preparedStatement: PreparedStatement = connecion.prepareStatement("SELECT C.id, C.owner, C.world, C.cuboid, C.created_at, C.updated_at, C.name, C.taxe, C.bank, C.taxe_etat, C.taille, C.welcome, C.farewell, C.warp ,P.uuid FROM survie_claims C, survie_player P WHERE C.owner = P.id")
             val resultSet: ResultSet = preparedStatement.executeQuery()
 
             while (resultSet.next()) {
@@ -68,7 +68,7 @@ class ClaimManager {
                 resultSetData.close()
                 preparedStatementData.close()
 
-                val preparedStatementMember: PreparedStatement = connecion.prepareStatement("SELECT M.role, A.uuid FROM survie_claims_member M, elenoxauthenticator A, survie_player P, survie_claims C WHERE C.id = M.claimID AND P.elid = A.id AND M.member = P.id AND C.id = ?")
+                val preparedStatementMember: PreparedStatement = connecion.prepareStatement("SELECT M.role, P.uuid FROM survie_claims_member M, survie_player P, survie_claims C WHERE C.id = M.claimID AND M.member = P.id AND C.id = ?")
                 preparedStatementMember.setInt(1, claim.claimId)
                 val resultSetMember: ResultSet = preparedStatementMember.executeQuery()
                 while (resultSetMember.next())
@@ -76,7 +76,7 @@ class ClaimManager {
                 resultSetMember.close()
                 preparedStatementMember.close()
 
-                val preparedStatementBan: PreparedStatement = connecion.prepareStatement("SELECT A.uuid FROM survie_claims_bans M, elenoxauthenticator A, survie_player P, survie_claims C WHERE C.id = M.claim_id AND P.elid = A.id AND M.player_id = P.id AND C.id = ?")
+                val preparedStatementBan: PreparedStatement = connecion.prepareStatement("SELECT P.uuid FROM survie_claims_bans M, survie_player P, survie_claims C WHERE C.id = M.claim_id AND M.player_id = P.id AND C.id = ?")
                 preparedStatementBan.setInt(1, claim.claimId)
                 val resultSetBan: ResultSet = preparedStatementBan.executeQuery()
                 while (resultSetBan.next())

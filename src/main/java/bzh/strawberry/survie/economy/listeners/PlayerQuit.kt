@@ -31,9 +31,9 @@ class PlayerQuit(plugin: Plugin) : Listener {
                 {
                     try {
                         val connection = StrawAPI.getAPI().dataFactory.dataSource.connection
-                        val preparedStatement = connection.prepareStatement("UPDATE survie_money SET balance = ? WHERE elid = ?")
+                        val preparedStatement = connection.prepareStatement("UPDATE survie_money SET balance = ? WHERE survie_id = ?")
                         preparedStatement.setDouble(1, surviePlayer.balance)
-                        preparedStatement.setInt(2, 0)
+                        preparedStatement.setInt(2, surviePlayer.survieID)
                         preparedStatement.executeUpdate()
                         preparedStatement.close()
                         connection.close()

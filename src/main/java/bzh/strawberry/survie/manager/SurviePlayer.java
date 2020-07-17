@@ -49,7 +49,6 @@ public class SurviePlayer {
     private SurviePlayer lastBienvenue;
     private boolean socialSpy;
     private boolean infoBlock;
-    private int elid;
 
     private JobData jobData;
 
@@ -83,8 +82,7 @@ public class SurviePlayer {
 
             try {
                 Connection connection = StrawAPI.getAPI().getDataFactory().getDataSource().getConnection();
-                // TODO
-                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM survie_player WHERE `elid` = '" + elid + "'");
+                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM survie_player WHERE `uuid` = '" + getUniqueID().toString() + "'");
                 ResultSet resultSet = preparedStatement.executeQuery();
                 if (resultSet.next()) {
                     // Le compte existe
@@ -182,7 +180,7 @@ public class SurviePlayer {
                     // Le compte existe pas on le créer
                     resultSet.close();
                     preparedStatement.close();
-                    preparedStatement = connection.prepareStatement("INSERT INTO survie_player (`elid`) VALUES ('" + 1 /* @TODO */ + "')", Statement.RETURN_GENERATED_KEYS);
+                    preparedStatement = connection.prepareStatement("INSERT INTO survie_player (`uuid`) VALUES ('" + getUniqueID().toString() + "')", Statement.RETURN_GENERATED_KEYS);
                     preparedStatement.executeUpdate();
                     ResultSet resultSet1 = preparedStatement.getGeneratedKeys();
                     if (resultSet1.next())
@@ -227,7 +225,7 @@ public class SurviePlayer {
     private void save() {
         try {
             Connection connection = StrawAPI.getAPI().getDataFactory().getDataSource().getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE survie_player SET `last_connexion`=?,`played_time`=?, `tpToggle`=?, `job`= ?, `healTime` = ?, `feedTime` = ?, `repairTime` = ?, `pubTime` = ?, `titre` = ?, `namemc` = ?, `parrainage` = ?, `parrainage_command` = ? WHERE `elid` = '" + this.elid + "'");
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE survie_player SET `last_connexion`=?,`played_time`=?, `tpToggle`=?, `job`= ?, `healTime` = ?, `feedTime` = ?, `repairTime` = ?, `pubTime` = ?, `titre` = ?, `namemc` = ?, `parrainage` = ?, `parrainage_command` = ? WHERE `uuid` = '" + getUniqueID().toString() + "'");
             preparedStatement.setTimestamp(1, new Timestamp(new Date().getTime()));
             preparedStatement.setLong(2, getPlayer().getStatistic(Statistic.PLAY_ONE_MINUTE) / 20); // Le temps est en secondes !
             preparedStatement.setBoolean(3, tpToggle);
