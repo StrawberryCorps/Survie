@@ -1,0 +1,221 @@
+name: Survie
+main: bzh.strawberry.survie.Survie
+version: ${project.version}
+authors:
+  - Eclixal
+  - Uicias
+depend:
+  - StrawChest
+api-version: 1.15
+description: Plugin qui gère le serveur Survie
+website: https://strawberry.bzh
+commands:
+  say:
+    description: Annonce un achat sur le serveur ou bien de faire une annonce sur le serveur
+  sudo:
+    description: Permet de faire executer une commande a un joueur
+    aliases:
+      - su
+  tpall:
+    description: TP tous les joueurs a sois
+  tp:
+    description: Se téléporter a un joueur
+  invsee:
+    description: Voir l'inventaire d'un joueur
+    aliases:
+      - inv
+      - iv
+  tphere:
+    description: Permet de téléporter un joueur a sois
+  tptoggle:
+    description: Permet d'activé ou désactivé la téléportation
+  vanish:
+    description: Afin de devenir invisible
+    aliases:
+      - v
+  bienvenue:
+    description: Annonce la bienvenue a un nouveau joueur
+    aliases:
+      - b
+      - welcome
+  hat:
+    description: Permet de mettre un objet sur sa tête
+  home:
+    description: Permet de voir ses homes ou de s'y téléporter
+    aliases:
+      - homes
+  sethome:
+    description: Permet de définir un home
+  delhome:
+    description: Permet de supprimer un home
+  kit:
+    description: Ouvre le menu des kits
+    aliases:
+      - kits
+  menu:
+    description: Affiche le menu principale du Survie
+  nick:
+    description: Permet de changer son pseudo
+  succes:
+    description: Affiche le menu des succès
+  tpa:
+    description: Permet de faire une demande de téléportation a un joueur
+  tpahere:
+    description: Permet de faire une demande de téléportation a un joueur a sois
+  tpyes:
+    description: Accepte la demande de téléportation
+    aliases:
+      - tpoui
+      - tpaccept
+  tpno:
+    description: Refuse la demande de téléportation
+    aliases:
+      - tpnon
+      - tpdeny
+  warp:
+    description: Permet de se téléporter a un warp
+    aliases:
+      - warps
+  spawn:
+    description: Permet de se téléporter au spawn du Survie
+  jobs:
+    description: Commande pour séléctionner un métier
+    aliases:
+      - job
+      - metier
+      - travail
+  money:
+    description: Gère le système monétaire du Survie
+    aliases:
+      - argent
+      - argents
+      - mo
+      - ecu
+  enderchest:
+    description: Affiche l'enderchest d'un joueur
+    aliases:
+      - ec
+  goto:
+    description: Pour se téléporter dans un autre monde que le spawn
+    aliases:
+      - gt
+      - got
+      - gto
+  claim:
+    description: Commande qui gère les claims
+    aliases:
+      - c
+      - claims
+  claimmod:
+    description: Commande de gestion pour les membres du staff
+    aliases:
+      - cm
+      - claimm
+  claimadmin:
+    description: Commande pour les administrateurs pour la gestion des claims
+    aliases:
+      - ca
+      - claima
+      - claimadministration
+      - claimadministrateur
+  tpo:
+    description: Se téléporter à un joueur, peu importe son tptoggle
+  tpohere:
+    description: Téléporter un joueur sur sois, peu importe son tptoggle
+  spectator:
+    description: Met le staff à la fois en vanish et en gamemode Spectator
+    aliases:
+      - spec
+  craft:
+    description: Ouvre une table de craft
+    aliases:
+      - wb
+      - workbench
+  tables:
+    description: Ouvre une interface pour acceder aux diverses tables et utilitaires
+    aliases:
+      - tb
+      - table
+  ptime:
+    description: Change l'heure personnelle d'un joueur
+  temps:
+    description: Change la météo pour un joueur
+  back:
+    description: Retourne sur l'emplacement de sa derniere mort
+  heal:
+    description: Soigne le joueur qui effectue cette commande
+  feed:
+    description: Rassasie le joueur qui effectue cette commande
+  repair:
+    description: Repare les items en inventaire
+  extinguish:
+    description: Éteind le joueur qui effectue cette commande
+    aliases:
+      - ext
+  experience:
+    description: Transfère de l'expérience depuis le joueur qui execute cette commande et un joueur cible
+  shopadmin:
+    description: Permet au Administrateur d'ajouter un shop
+  customjoin:
+    description: Change le message de connexion du joueur
+    aliases:
+      - cj
+  customleave:
+    description: Change le message de déconnexion du joueur
+    aliases:
+      - cl
+      - customquit
+      - cq
+  warpadmin:
+    description: Permet de créer ou supprimer des warps
+  pub:
+    description: Met en valeur un message de promotion
+  key:
+    description: Pour se téléporter au key
+  tprandom:
+    description: Se téléporte au hasard dans le monde
+    aliases:
+      - tpr
+  loterie:
+    description: Système de lotterie pour donner au joueur les impots
+  titre:
+    description: Ouvre une GUI pour choisir son titre sous son pseudo
+  reward:
+    description: Permet de voter pour le serveur
+    aliases:
+      - votes
+      - vote
+  titreadmin:
+    description: Donne le pouvoir à un être supérieur (un admin donc) de conférer un titre à la personne ciblée
+  star:
+    description: Pour les Maitres
+  getidsurvie:
+    description: Affiche l'id survie de la personne ciblée
+  trash:
+    description: Ouvre une poubelle pour le joueur
+    aliases:
+      - poubelle
+  tuto:
+    description: Ce téléporter a la zone Tutoriel
+  parrainage:
+    description: Permet de parrainer un joueur 7 jours Comte pour les personnes ayant le grade Roi
+    aliases:
+      - parrain
+      - par
+  infoblock:
+    description: Donne au joueur sur le point de casser le bloc la liste des personnes l'ayant placé
+    aliases:
+      - ib
+      - infobloc
+  homeadmin:
+    description: Permet à un staff de visualiser les homes d'un joueur ou s'y téléporter
+    aliases:
+      - homeadm
+  shop:
+    description: téléporte le joueur vers la zone shop
+  near:
+    description: Permet de voir les joueurs proches de soit
+  statadmin:
+    description: Force une stat a la valeur voulue
+  jeveuxunclaim:
+    description: Téléporte le joueur vers une zone où il peut claim
