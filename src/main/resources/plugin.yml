@@ -6,12 +6,11 @@ authors:
   - Uicias
 depend:
   - StrawChest
+  - StrawCore
 api-version: 1.15
-description: Plugin qui gère le serveur Survie
+description: StrawSurvie module :)
 website: https://strawberry.bzh
 commands:
-  say:
-    description: Annonce un achat sur le serveur ou bien de faire une annonce sur le serveur
   sudo:
     description: Permet de faire executer une commande a un joueur
     aliases:
@@ -29,10 +28,6 @@ commands:
     description: Permet de téléporter un joueur a sois
   tptoggle:
     description: Permet d'activé ou désactivé la téléportation
-  vanish:
-    description: Afin de devenir invisible
-    aliases:
-      - v
   bienvenue:
     description: Annonce la bienvenue a un nouveau joueur
     aliases:
@@ -52,12 +47,8 @@ commands:
     description: Ouvre le menu des kits
     aliases:
       - kits
-  menu:
-    description: Affiche le menu principale du Survie
   nick:
     description: Permet de changer son pseudo
-  succes:
-    description: Affiche le menu des succès
   tpa:
     description: Permet de faire une demande de téléportation a un joueur
   tpahere:
@@ -122,20 +113,11 @@ commands:
     description: Se téléporter à un joueur, peu importe son tptoggle
   tpohere:
     description: Téléporter un joueur sur sois, peu importe son tptoggle
-  spectator:
-    description: Met le staff à la fois en vanish et en gamemode Spectator
-    aliases:
-      - spec
   craft:
     description: Ouvre une table de craft
     aliases:
       - wb
       - workbench
-  tables:
-    description: Ouvre une interface pour acceder aux diverses tables et utilitaires
-    aliases:
-      - tb
-      - table
   ptime:
     description: Change l'heure personnelle d'un joueur
   temps:
@@ -178,30 +160,10 @@ commands:
       - tpr
   loterie:
     description: Système de lotterie pour donner au joueur les impots
-  titre:
-    description: Ouvre une GUI pour choisir son titre sous son pseudo
-  reward:
-    description: Permet de voter pour le serveur
-    aliases:
-      - votes
-      - vote
-  titreadmin:
-    description: Donne le pouvoir à un être supérieur (un admin donc) de conférer un titre à la personne ciblée
-  star:
-    description: Pour les Maitres
-  getidsurvie:
-    description: Affiche l'id survie de la personne ciblée
   trash:
     description: Ouvre une poubelle pour le joueur
     aliases:
       - poubelle
-  tuto:
-    description: Ce téléporter a la zone Tutoriel
-  parrainage:
-    description: Permet de parrainer un joueur 7 jours Comte pour les personnes ayant le grade Roi
-    aliases:
-      - parrain
-      - par
   infoblock:
     description: Donne au joueur sur le point de casser le bloc la liste des personnes l'ayant placé
     aliases:

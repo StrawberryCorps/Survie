@@ -328,7 +328,7 @@ public class Survie extends JavaPlugin {
         int ret = -1;
         try {
             Connection connection = StrawAPI.getAPI().getDataFactory().getDataSource().getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT survie_player.id AS survie_player_id FROM survie_player  uuid = ?");
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT survie_player.id AS survie_player_id FROM survie_player WHERE uuid = ?");
             preparedStatement.setString(1, uuid.toString());
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next())
