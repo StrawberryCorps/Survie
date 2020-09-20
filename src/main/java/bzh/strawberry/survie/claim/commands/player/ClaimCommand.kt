@@ -4,14 +4,12 @@ import bzh.strawberry.api.command.AbstractCommand
 import bzh.strawberry.api.world.Cuboid
 import bzh.strawberry.survie.Survie
 import bzh.strawberry.survie.claim.commands.player.sub.*
-import net.minecraft.server.v1_15_R1.ChatMessageType
-import net.minecraft.server.v1_15_R1.IChatBaseComponent
-import net.minecraft.server.v1_15_R1.PacketPlayOutChat
+import net.minecraft.server.v1_16_R2.*
 import org.bukkit.Bukkit
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabCompleter
-import org.bukkit.craftbukkit.v1_15_R1.entity.CraftPlayer
+import org.bukkit.craftbukkit.v1_16_R2.entity.CraftPlayer
 import org.bukkit.entity.Player
 import org.bukkit.plugin.Plugin
 import java.util.*
@@ -61,7 +59,7 @@ class ClaimCommand(plugin: Plugin) : AbstractCommand(plugin, "survie.joueur"), T
                         player.sendMessage(Survie.SURVIE.prefix + "§cVous êtes trop proche d'un autre claim ☠")
 
                         val json = "{\"clickEvent\":{\"action\":\"run_command\",\"value\":\"\",\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"§6Se téléporter à un endroit claimable\"}]}}},\"text\":\"§b§l[§9§lSurvie§b§l] §3Vous voulez rejoindre une zone pù vous pouvez claim ? §3Cliquez §e§l[§6§lICI§e§l]\"}"
-                        val packet = PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a(json), ChatMessageType.CHAT)
+                        val packet = PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a(json), ChatMessageType.CHAT, player.uniqueId)
                         (commandSender as CraftPlayer).handle.playerConnection.sendPacket(packet)
                     }
                 } else {

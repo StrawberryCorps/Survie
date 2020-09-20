@@ -52,7 +52,7 @@ public class ChasseurGUI extends AbstractInterface {
             //4 points
             al.set(0, "§7Rapporte §e4§7 points");
             this.addItem(new ItemStackBuilder(Material.CAVE_SPIDER_SPAWN_EGG, 1, "§3Araignée venimeuse", al), 12, null);
-            this.addItem(new ItemStackBuilder(Material.ZOMBIE_PIGMAN_SPAWN_EGG, 1, "§3Cochon-zombie", al), 15, null);
+            this.addItem(new ItemStackBuilder(Material.ZOMBIFIED_PIGLIN_SPAWN_EGG, 1, "§3Cochon-zombie", al), 15, null);
 
             //6 points
             al.set(0, "§7Rapporte §e6§7 points");

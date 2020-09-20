@@ -31,7 +31,7 @@ public class EntityDeath implements Listener {
                         surviePlayer.getJobData().addHourXP(3);
                         break;
                     case CAVE_SPIDER:
-                    case PIG_ZOMBIE:
+                    case ZOMBIFIED_PIGLIN:
                         surviePlayer.getJobData().addHourXP(4);
                         break;
                     case TURTLE:

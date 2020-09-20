@@ -1,11 +1,11 @@
 package bzh.strawberry.survie.utils;
 
 import bzh.strawberry.survie.Survie;
-import net.minecraft.server.v1_15_R1.*;
+import net.minecraft.server.v1_16_R2.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.craftbukkit.v1_15_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_16_R2.CraftWorld;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 
