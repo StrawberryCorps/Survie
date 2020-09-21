@@ -274,7 +274,7 @@ public class Survie extends JavaPlugin {
         Survie.SURVIE.getServer().getScheduler().runTaskAsynchronously(Survie.SURVIE, () -> {
             try {
                 if (getWarps().containsKey(name)) {
-                    player.sendMessage(Survie.SURVIE.getPrefix() + "§cUn warp est déjà défini avec ce nom !");
+                    player.sendMessage(Survie.SURVIE.getPrefix() + StrawAPI.getAPI().getL10n().getTranslation(player.getUniqueId(), "survie.warp.exist"));
                 } else {
                     Connection connection = StrawAPI.getAPI().getDataFactory().getDataSource().getConnection();
                     PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO survie_warps (`name`, `location`) VALUES (?, ?)");
@@ -286,10 +286,10 @@ public class Survie extends JavaPlugin {
                     preparedStatement.close();
                     connection.close();
                     warps.put(name, location);
-                    player.sendMessage(Survie.SURVIE.getPrefix() + "§3Le warp §9" + name + " §3a été créé !");
+                    player.sendMessage(Survie.SURVIE.getPrefix() + StrawAPI.getAPI().getL10n().getTranslation(player.getUniqueId(), "survie.warp.create").replace("{name}", name));
                 }
             } catch (SQLException e) {
-                player.sendMessage(Survie.SURVIE.getPrefix() + "§cUne erreur est survenue lors de l'enregistrement du warp !");
+                player.sendMessage(Survie.SURVIE.getPrefix() + StrawAPI.getAPI().getL10n().getTranslation(player.getUniqueId(), "survie.error").replace("{error}", e.getMessage()));
             }
         });
     }
@@ -307,11 +307,11 @@ public class Survie extends JavaPlugin {
                     preparedStatement.close();
                     connection.close();
                     warps.remove(name);
-                    player.sendMessage(Survie.SURVIE.getPrefix() + "§3Le warp §9" + name + " §3a été supprimé !");
+                    player.sendMessage(Survie.SURVIE.getPrefix() + StrawAPI.getAPI().getL10n().getTranslation(player.getUniqueId(), "survie.warp.delete").replace("{name}", name));
                 } else
-                    player.sendMessage(Survie.SURVIE.getPrefix() + "§cIl n'y a aucun warp avec ce nom !");
+                    player.sendMessage(Survie.SURVIE.getPrefix() + StrawAPI.getAPI().getL10n().getTranslation(player.getUniqueId(), "survie.warp.notexist"));
             } catch (SQLException e) {
-                player.sendMessage(Survie.SURVIE.getPrefix() + "§cUne erreur est survenue lors de la suppression du warp !");
+                player.sendMessage(Survie.SURVIE.getPrefix() + StrawAPI.getAPI().getL10n().getTranslation(player.getUniqueId(), "survie.error").replace("{error}", e.getMessage()));
             }
         });
     }
@@ -360,7 +360,6 @@ public class Survie extends JavaPlugin {
             for (World world : Bukkit.getWorlds()) {
                 world.setTime(1000);
             }
-            Bukkit.broadcastMessage(Survie.SURVIE.getPrefix() + "§7La nuit a été passée !");
         }
 
     }

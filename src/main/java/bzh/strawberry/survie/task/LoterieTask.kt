@@ -1,9 +1,11 @@
 package bzh.strawberry.survie.task
 
+import bzh.strawberry.api.StrawAPI
 import bzh.strawberry.survie.Survie
 import org.bukkit.Bukkit
 import org.bukkit.plugin.Plugin
 import java.util.*
+import java.util.function.Consumer
 
 /*
  * This file (LoterieTask.kt) is part of a project Survie.
@@ -35,8 +37,8 @@ class LoterieTask(plugin: Plugin) : Runnable {
                 Bukkit.getScheduler().scheduleAsyncRepeatingTask(Survie.SURVIE, {
                     if (tirage.timeInMillis / 1000 == System.currentTimeMillis() / 1000) {
                         Survie.SURVIE.lotterieManager.generateResult()
-                    } else if (tirage.timeInMillis / 1000 - 3600 == System.currentTimeMillis() / 1000) Bukkit.broadcastMessage("§8[§3§lLoterie§8] §7Le tirage va avoir lieu dans 1 heure ! §b/loterie")
-                    else if (tirage.timeInMillis / 1000 - 1800 == System.currentTimeMillis() / 1000) Bukkit.broadcastMessage("§8[§3§lLoterie§8] §7Le tirage va avoir lieu dans 30 minutes ! §b/loterie")
+                    } else if (tirage.timeInMillis / 1000 - 3600 == System.currentTimeMillis() / 1000) Survie.SURVIE.server.onlinePlayers.forEach(Consumer { t -> t.sendMessage(StrawAPI.getAPI().l10n.getTranslation(t.uniqueId, "survie.loterie.1h")) })
+                    else if (tirage.timeInMillis / 1000 - 1800 == System.currentTimeMillis() / 1000) Survie.SURVIE.server.onlinePlayers.forEach(Consumer { t -> t.sendMessage(StrawAPI.getAPI().l10n.getTranslation(t.uniqueId, "survie.loterie.30m")) })
                 }, 0, 20)
             }
         }, tirage.time)

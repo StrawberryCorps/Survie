@@ -1,8 +1,10 @@
 package bzh.strawberry.survie.claim.commands.admin
 
+import bzh.strawberry.api.StrawAPI
 import bzh.strawberry.api.command.AbstractCommand
 import bzh.strawberry.survie.claim.commands.admin.sub.*
 import org.bukkit.command.CommandSender
+import org.bukkit.entity.Player
 import org.bukkit.plugin.Plugin
 
 /*
@@ -30,11 +32,11 @@ class ClaimAdminCommand(plugin: Plugin) : AbstractCommand(plugin, "survie.admin"
             ClaimAdminSetBankSubCommand.execute(sender, alias, strings)
         } else {
             sender.sendMessage("§6§m----------------------------")
-            sender.sendMessage("§e/$alias addMember <joueur> <owner> §8» §7Ajoute un joueur a un claim")
-            sender.sendMessage("§e/$alias removeMember <joueur> <owner> §8» §7Supprime un joueur d'un claim")
-            sender.sendMessage("§e/$alias delete <owner> §8» §7Supprime claim")
-            sender.sendMessage("§e/$alias changeOwner <joueur> <owner> §8» §7Change le chef d'un claim")
-            sender.sendMessage("§e/$alias setbank <joueur> <banque> §8» §7Change la banque d'un claim")
+            sender.sendMessage("§e/$alias addMember <joueur> <owner> §8» " + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.claim.admin.addP"))
+            sender.sendMessage("§e/$alias removeMember <joueur> <owner> §8» " + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.claim.admin.removeP"))
+            sender.sendMessage("§e/$alias delete <owner> §8» " + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.claiù.admin.removeC"))
+            sender.sendMessage("§e/$alias changeOwner <joueur> <owner> §8» " + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.claim.admin.owner"))
+            sender.sendMessage("§e/$alias setbank <joueur> <banque> §8» " + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.claim.admin.banque"))
             sender.sendMessage("§6§m----------------------------")
         }
         return true

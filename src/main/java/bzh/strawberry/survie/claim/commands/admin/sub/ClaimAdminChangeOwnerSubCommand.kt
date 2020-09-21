@@ -1,7 +1,9 @@
 package bzh.strawberry.survie.claim.commands.admin.sub
 
+import bzh.strawberry.api.StrawAPI
 import bzh.strawberry.survie.Survie
 import org.bukkit.command.CommandSender
+import org.bukkit.entity.Player
 
 /*
  * This file (ClaimAdminChangeOwnerSubCommand.kt) is part of a project Survie.
@@ -21,29 +23,29 @@ object ClaimAdminChangeOwnerSubCommand {
         val player = Survie.SURVIE.server.getOfflinePlayer(args[1])
 
         if (owner == null || player == null) {
-            sender.sendMessage(Survie.SURVIE.prefix + "§cCe joueur n'existe pas §l☠")
+            sender.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.player.notexist"))
             return false
         }
 
         val claim = Survie.SURVIE.claimManager.getClaim(owner.uniqueId)
 
         if (claim == null) {
-            sender.sendMessage(Survie.SURVIE.prefix + "§cCe joueur n'a pas de claim ☠")
+            sender.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.player.notclaim"))
             return false
         }
 
         if (Survie.SURVIE.claimManager.getClaim(Survie.SURVIE.getSurviePlayer(player.uniqueId)) != claim) {
-            sender.sendMessage(Survie.SURVIE.prefix + "§cCe joueur n'est pas dans ce claim ☠")
+            sender.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.player.isnothere"))
             return false
         }
 
         if (claim.owner == player.uniqueId) {
-            sender.sendMessage(Survie.SURVIE.prefix + "§cCe joueur est déjà chef du claim ☠")
+            sender.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.admin.isowner"))
             return false
         }
 
         claim.changeOwner(claim.getMember(player.uniqueId))
-        sender.sendMessage(Survie.SURVIE.prefix + "§7Vous venez de changer le chef du claim !")
+        sender.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.admin.changeowner"))
         return true
     }
 }

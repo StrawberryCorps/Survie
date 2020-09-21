@@ -1,9 +1,11 @@
 package bzh.strawberry.survie.claim.commands.admin.sub
 
+import bzh.strawberry.api.StrawAPI
 import bzh.strawberry.survie.Survie
 import bzh.strawberry.survie.claim.manager.data.ClaimMember
 import bzh.strawberry.survie.claim.manager.rank.ClaimRank
 import org.bukkit.command.CommandSender
+import org.bukkit.entity.Player
 
 /*
  * This file (ClaimAdminAddMemberSubCommand.kt) is part of a project Survie.
@@ -23,24 +25,24 @@ object ClaimAdminAddMemberSubCommand {
         val player = Survie.SURVIE.server.getPlayer(args[1])
 
         if (owner == null) {
-            sender.sendMessage(Survie.SURVIE.prefix + "§cCe joueur n'existe pas §l☠")
+            sender.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.player.notexist"))
             return false
         }
 
         if (player == null) {
-            sender.sendMessage(Survie.SURVIE.prefix + "§cCe joueur n'est pas connecté §l☠")
+            sender.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.player.notonline"))
             return false
         }
 
         val claim = Survie.SURVIE.claimManager.getClaim(owner.uniqueId)
 
         if (claim == null) {
-            sender.sendMessage(Survie.SURVIE.prefix + "§cCe joueur n'a pas de claim ☠")
+            sender.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.player.notclaim"))
             return false
         }
 
         if (Survie.SURVIE.claimManager.getClaim(Survie.SURVIE.getSurviePlayer(player.uniqueId)) != null) {
-            sender.sendMessage(Survie.SURVIE.prefix + "§cCe joueur est déjà dans un claim ☠")
+            sender.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.player.isonclaim"))
             return false
         }
 
@@ -50,7 +52,7 @@ object ClaimAdminAddMemberSubCommand {
 //        }
 
         claim.addClaimMember(ClaimMember(player.uniqueId, ClaimRank.BARON), true)
-        sender.sendMessage(Survie.SURVIE.prefix + "§3Vous venez d'ajouter §b" + player.name + " §3au claim de §b" + owner.name)
+        sender.sendMessage(Survie.SURVIE.prefix + String.format(StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.admin.add"), player.name, owner.name))
         return true
     }
 }

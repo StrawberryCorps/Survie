@@ -1,7 +1,9 @@
 package bzh.strawberry.survie.claim.commands.admin.sub
 
+import bzh.strawberry.api.StrawAPI
 import bzh.strawberry.survie.Survie
 import org.bukkit.command.CommandSender
+import org.bukkit.entity.Player
 
 /*
  * This file (ClaimAdminRemoveMemberSubCommand.kt) is part of a project Survie.
@@ -21,24 +23,24 @@ object ClaimAdminRemoveMemberSubCommand {
         val player = Survie.SURVIE.server.getPlayer(args[1])
 
         if (owner == null) {
-            sender.sendMessage(Survie.SURVIE.prefix + "§cCe joueur n'existe pas §l☠")
+            sender.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.player.notexist"))
             return false
         }
 
         if (player == null) {
-            sender.sendMessage(Survie.SURVIE.prefix + "§cCe joueur n'est pas connecté §l☠")
+            sender.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.player.notonline"))
             return false
         }
 
         val claim = Survie.SURVIE.claimManager.getClaim(owner.uniqueId)
 
         if (claim == null) {
-            sender.sendMessage(Survie.SURVIE.prefix + "§cCe joueur n'a pas de claim ☠")
+            sender.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.player.notclaim"))
             return false
         }
 
         if (Survie.SURVIE.claimManager.getClaim(Survie.SURVIE.getSurviePlayer(player.uniqueId)) != claim) {
-            sender.sendMessage(Survie.SURVIE.prefix + "§cCe joueur n'est pas dans ce claim ☠")
+            sender.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.player.isnothere"))
             return false
         }
 

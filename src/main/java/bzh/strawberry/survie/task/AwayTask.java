@@ -1,5 +1,6 @@
 package bzh.strawberry.survie.task;
 
+import bzh.strawberry.api.StrawAPI;
 import bzh.strawberry.survie.Survie;
 
 import java.util.Map;
@@ -30,7 +31,7 @@ public class AwayTask implements Runnable {
             timer++;
 
             if (timer == 900 && !Survie.SURVIE.getServer().getPlayer(uuid).isOp()) {
-                Survie.SURVIE.getServer().getPlayer(uuid).kickPlayer("§cVous êtes inactif depuis 15 minutes !");
+                Survie.SURVIE.getServer().getPlayer(uuid).kickPlayer(StrawAPI.getAPI().getL10n().getTranslation(uuid, "survie.afk"));
             } else {
                 this.timers.put(uuid, timer);
             }
