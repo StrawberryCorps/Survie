@@ -1,5 +1,6 @@
 package bzh.strawberry.survie.claim.commands.player.sub
 
+import bzh.strawberry.api.StrawAPI
 import bzh.strawberry.survie.Survie
 import bzh.strawberry.survie.claim.manager.rank.ClaimRank
 import org.bukkit.command.CommandSender
@@ -20,7 +21,7 @@ object ClaimFarewellSubCommand {
 
             if (args.size == 2 && args[1] == "off") {
                 claim.farewell = null
-                surviePlayer.player.sendMessage(Survie.SURVIE.prefix + "§7Vous venez de supprimer le message d'au revoir !")
+                surviePlayer.player.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.cmd.player.farewell.remove"))
             } else if (args.size > 1) {
                 val ite = args.iterator()
                 var msg = ""
@@ -30,14 +31,14 @@ object ClaimFarewellSubCommand {
                 if (surviePlayer.player.hasPermission("survie.chat+"))
                     msg = msg.replace("&", "§")
                 else if (msg.contains(Regex("&.")))
-                    surviePlayer.player.sendMessage(Survie.SURVIE.prefix + "§cVous n'avez pas acheté l'extra §6chat+ : §e/store")
+                    surviePlayer.player.sendMessage(Survie.SURVIE.prefix + "") // @TODO faire un message
                 claim.farewell = msg
-                surviePlayer.player.sendMessage(Survie.SURVIE.prefix + "§7Vous venez de définir le message de départ dans votre claim : " + msg)
+                surviePlayer.player.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation(sender.uniqueId, "survie.cmd.player.farewell.set").replace("{message}", msg))
 
             }
 
         } else
-            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + "§cVous devez être au minimum être " + ClaimRank.MARQUIS.s + " dans le claim pour définir le message ☠")
+            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation(sender.uniqueId, "survie.cmd.player.farewell.rank").replace("{rank}", ClaimRank.MARQUIS.s))
         return true
     }
 }

@@ -1,5 +1,6 @@
 package bzh.strawberry.survie.claim.commands.player.sub
 
+import bzh.strawberry.api.StrawAPI
 import bzh.strawberry.survie.Survie
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
@@ -14,7 +15,7 @@ object ClaimHomeSubCommand {
 
     fun execute(sender: CommandSender, alias: String, args: Array<String>): Boolean {
         val surviePlayer = Survie.SURVIE.getSurviePlayer((sender as Player).uniqueId)
-        surviePlayer.player.sendMessage(Survie.SURVIE.prefix + "§7Téléportation a votre claim...")
+        surviePlayer.player.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation(sender.uniqueId, "survie.cmd.player.home.teleport"))
         surviePlayer.player.teleport(Survie.SURVIE.claimManager.getClaim(surviePlayer)!!.home)
         return true
     }

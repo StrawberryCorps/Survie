@@ -45,12 +45,12 @@ object ClaimAdminRemoveMemberSubCommand {
         }
 
         if (claim.owner == player.uniqueId) {
-            sender.sendMessage(Survie.SURVIE.prefix + "§cCe joueur est owner d'un claim vous ne pouvez pas le supprimer ☠")
+            sender.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.admin.isowner.delete"))
             return false
         }
 
         claim.removClaimMember(claim.getMember(player.uniqueId), true)
-        sender.sendMessage(Survie.SURVIE.prefix + "§3Vous venez de supprimer §b" + player.name + " §3du claim de §b" + owner.name)
+        sender.sendMessage(Survie.SURVIE.prefix + String.format(StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.admin.remove"), player.name, owner.name))
         return true
     }
 }

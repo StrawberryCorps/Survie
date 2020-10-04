@@ -1,7 +1,9 @@
 package bzh.strawberry.survie.claim.commands.admin.sub
 
+import bzh.strawberry.api.StrawAPI
 import bzh.strawberry.survie.Survie
 import org.bukkit.command.CommandSender
+import org.bukkit.entity.Player
 
 /*
  * This file (ClaimAdminSetBankSubCommand.kt) is part of a project Survie.
@@ -21,7 +23,7 @@ object ClaimAdminSetBankSubCommand {
         val claim = Survie.SURVIE.claimManager.getClaim(target.uniqueId)
 
         if (claim == null) {
-            sender.sendMessage(Survie.SURVIE.prefix + "§cPas de claim trouvé pour ce joueur... ☠")
+            sender.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.admin.noclaim.found"))
             return false
         }
         val nombre = args[2].toDouble()

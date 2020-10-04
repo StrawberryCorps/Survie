@@ -1,5 +1,6 @@
 package bzh.strawberry.survie.claim.commands.player.sub
 
+import bzh.strawberry.api.StrawAPI
 import bzh.strawberry.survie.Survie
 import bzh.strawberry.survie.claim.manager.data.ClaimMember
 import org.bukkit.command.CommandSender
@@ -23,30 +24,30 @@ object ClaimDenySubCommand {
 
         val invite = Survie.SURVIE.server.getPlayer(args[1])
         if (invite == null) {
-            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + "§cCe joueur n'est pas connecté §l☠")
+            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.player.notonline"))
             return false
         }
 
         val claim = Survie.SURVIE.claimManager.getClaim(Survie.SURVIE.getSurviePlayer(invite.uniqueId))
         if (claim == null) {
-            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + "§cCe joueur n'a pas de claim ☠")
+            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.player.notclaim"))
             return false
         }
 
         if (!claim.invitations.containsKey(surviePlayer.uniqueID)) {
-            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + "§cCe claim ne vous a pas invité ☠")
+            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.cmd.player.accept.notinvite"))
             return false
         }
 
         claim.invitations.remove(surviePlayer.uniqueID)
 
         if (Survie.SURVIE.server.getPlayer(claim.owner) != null)
-            Survie.SURVIE.server.getPlayer(claim.owner)!!.sendMessage(Survie.SURVIE.prefix + "§3" + surviePlayer.player.name + " §7a refusé l'invitation")
+            Survie.SURVIE.server.getPlayer(claim.owner)!!.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation(claim.owner, "survie.cmd.player.deny.annonce").replace("{player}", surviePlayer.player.name))
         claim.claimMembers.forEach { t: ClaimMember? ->
             if (Survie.SURVIE.server.getPlayer(t!!.uuidMember) != null)
-                Survie.SURVIE.server.getPlayer(t.uuidMember)!!.sendMessage(Survie.SURVIE.prefix + "§3" + surviePlayer.player.name + " §7a refusé l'invitation")
+                Survie.SURVIE.server.getPlayer(t.uuidMember)!!.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation(claim.owner, "survie.cmd.player.deny.annonce").replace("{player}", surviePlayer.player.name))
         }
-        surviePlayer.player.sendMessage(Survie.SURVIE.prefix + "§7Vous venez de refuser l'invitation")
+        surviePlayer.player.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.cmd.player.deny.deny"))
         return true
     }
 }

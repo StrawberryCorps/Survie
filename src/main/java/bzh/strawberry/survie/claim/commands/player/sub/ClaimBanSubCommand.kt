@@ -1,5 +1,6 @@
 package bzh.strawberry.survie.claim.commands.player.sub
 
+import bzh.strawberry.api.StrawAPI
 import bzh.strawberry.survie.Survie
 import bzh.strawberry.survie.claim.manager.data.ClaimMember
 import bzh.strawberry.survie.claim.manager.rank.ClaimRank
@@ -24,34 +25,34 @@ object ClaimBanSubCommand {
         }
 
         if (claim!!.getRank(surviePlayer) != ClaimRank.DUC && claim.getRank(surviePlayer) != ClaimRank.MARQUIS && claim.getRank(surviePlayer) != ClaimRank.COMTE) {
-            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + "§cVous devez être " + ClaimRank.COMTE.s + " §cpour bannir des joueurs du claim ☠")
+            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.cmd.player.ban.rank").replace("{rank}", ClaimRank.COMTE.s))
             return false
         }
 
         val target = Survie.SURVIE.server.getOfflinePlayer(args[1])
 
         if (target == null) {
-            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + "§cCe joueur n'existe pas ! ☠")
+            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.player.notexist"))
             return false
         }
 
         if (claim.owner == target.uniqueId || claim.claimMembers.stream().filter { t -> t.uuidMember == target.uniqueId }.findFirst().orElse(null) != null) {
-            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + "§cVous ne pouvez pas bannir un membre du claim ☠")
+            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.cmd.player.ban.cannot"))
             return false
         }
 
         if (claim.bannis.contains(target.uniqueId)) {
-            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + "§cCe joueur est déjà banni du claim ☠")
+            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.cmd.player.ban.already"))
             return false
         }
 
         claim.addBan(target.uniqueId, true)
 
         if (Survie.SURVIE.server.getPlayer(claim.owner) != null)
-            Survie.SURVIE.server.getPlayer(claim.owner)!!.sendMessage(Survie.SURVIE.prefix + claim.getRank(surviePlayer).s + " " + sender.name + " §7a banni §3" + target.name + " §7du claim")
+            Survie.SURVIE.server.getPlayer(claim.owner)!!.sendMessage(Survie.SURVIE.prefix + String.format(StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.cmd.player.ban.add"), claim.getRank(surviePlayer).s, sender.name, target.name))
         claim.claimMembers.forEach { t: ClaimMember? ->
             if (Survie.SURVIE.server.getPlayer(t!!.uuidMember) != null)
-                Survie.SURVIE.server.getPlayer(t.uuidMember)!!.sendMessage(Survie.SURVIE.prefix + claim.getRank(surviePlayer).s + " " + sender.name + " §7a banni §3" + target.name + " §7du claim")
+                Survie.SURVIE.server.getPlayer(t.uuidMember)!!.sendMessage(Survie.SURVIE.prefix + String.format(StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.cmd.player.ban.add"), claim.getRank(surviePlayer).s, sender.name, target.name))
         }
         return true
     }

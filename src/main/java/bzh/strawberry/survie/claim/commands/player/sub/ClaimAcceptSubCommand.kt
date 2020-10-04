@@ -1,5 +1,6 @@
 package bzh.strawberry.survie.claim.commands.player.sub
 
+import bzh.strawberry.api.StrawAPI
 import bzh.strawberry.survie.Survie
 import bzh.strawberry.survie.claim.manager.data.ClaimMember
 import bzh.strawberry.survie.claim.manager.rank.ClaimRank
@@ -23,34 +24,34 @@ object ClaimAcceptSubCommand {
         }
 
         if (Survie.SURVIE.claimManager.getClaim(surviePlayer) != null) {
-            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + "§cVous devez d'abord quitter votre claim")
+            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.cmd.player.accept.leave"))
             return false
         }
 
         val invite = Survie.SURVIE.server.getPlayer(args[1])
         if (invite == null) {
-            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + "§cCe joueur n'est pas connecté §l☠")
+            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.player.notonline"))
             return false
         }
 
         val claim = Survie.SURVIE.claimManager.getClaim(Survie.SURVIE.getSurviePlayer(invite.uniqueId))
         if (claim == null) {
-            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + "§cCe joueur n'a pas de claim ☠")
+            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.player.notclaim"))
             return false
         }
 
         if (!claim.invitations.containsKey(surviePlayer.uniqueID)) {
-            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + "§cCe claim ne vous a pas invité ☠")
+            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.cmd.player.accept.notinvite"))
             return false
         }
 
         if (claim.invitations[surviePlayer.uniqueID]!! < System.currentTimeMillis()) {
-            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + "§cL'invitation pour rejoindre le claim de " + args[1] + " a expirée ☠")
+            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.cmd.player.accept.expired").replace("{user}", args[1]))
             return false
         }
 
         if (claim.claimMembers.size >= claim.maxMember) {
-            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + "§cCe claim est plein ☠")
+            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.claim.isfull"))
             return false
         }
 
@@ -58,12 +59,12 @@ object ClaimAcceptSubCommand {
         surviePlayer.player.teleport(claim.home)
 
         if (Survie.SURVIE.server.getPlayer(claim.owner) != null)
-            Survie.SURVIE.server.getPlayer(claim.owner)!!.sendMessage(Survie.SURVIE.prefix + "§3" + surviePlayer.player.name + " §7a rejoint le claim")
+            Survie.SURVIE.server.getPlayer(claim.owner)!!.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation(claim.owner, "survie.cmd.player.accept.join").replace("{player}", surviePlayer.player.name))
         claim.claimMembers.forEach { t: ClaimMember? ->
             if (Survie.SURVIE.server.getPlayer(t!!.uuidMember) != null)
-                Survie.SURVIE.server.getPlayer(t.uuidMember)!!.sendMessage(Survie.SURVIE.prefix + "§3" + surviePlayer.player.name + " §7a rejoint  le claim")
+                Survie.SURVIE.server.getPlayer(t.uuidMember)!!.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation(t.uuidMember, "survie.cmd.player.accept.join").replace("{player}", surviePlayer.player.name))
         }
-        surviePlayer.player.sendMessage(Survie.SURVIE.prefix + "§7Vous venez de rejoindre le claim")
+        surviePlayer.player.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.cmd.player.accept.joined"))
         return true
     }
 }

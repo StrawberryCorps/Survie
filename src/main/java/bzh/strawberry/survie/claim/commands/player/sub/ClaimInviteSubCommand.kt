@@ -1,5 +1,6 @@
 package bzh.strawberry.survie.claim.commands.player.sub
 
+import bzh.strawberry.api.StrawAPI
 import bzh.strawberry.survie.Survie
 import bzh.strawberry.survie.claim.manager.data.ClaimMember
 import bzh.strawberry.survie.claim.manager.rank.ClaimRank
@@ -29,18 +30,18 @@ object ClaimInviteSubCommand {
         }
 
         if (claim.claimMembers.size >= claim.maxMember) {
-            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + "§cVous avez atteint le nombre de joueur maximum dans votre claim ☠")
+            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation(sender.uniqueId, "survie.cmd.player.invite.max"))
             return false
         }
 
         val player = Survie.SURVIE.server.getPlayer(args[1])
         if (player == null) {
-            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + "§cCe joueur n'est pas connecté §l☠")
+            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.player.notonline"))
             return false
         }
 
         if (Survie.SURVIE.claimManager.getClaim(Survie.SURVIE.getSurviePlayer(player.uniqueId)) != null) {
-            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + "§cCe joueur est déjà dans un claim ☠")
+            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.player.isonclaim"))
             return false
         }
 

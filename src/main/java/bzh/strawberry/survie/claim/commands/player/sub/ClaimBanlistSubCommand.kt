@@ -1,5 +1,6 @@
 package bzh.strawberry.survie.claim.commands.player.sub
 
+import bzh.strawberry.api.StrawAPI
 import bzh.strawberry.survie.Survie
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
@@ -23,7 +24,7 @@ object ClaimBanlistSubCommand {
         }
 
         if (claim == null) {
-            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + "§cAucun claim trouvé... ☠")
+            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.cmd.player.banlist.notfound"))
             return false
         }
         val sb = StringBuilder()

@@ -1,5 +1,6 @@
 package bzh.strawberry.survie.claim.commands.player.sub
 
+import bzh.strawberry.api.StrawAPI
 import bzh.strawberry.survie.Survie
 import bzh.strawberry.survie.claim.manager.data.ClaimMember
 import bzh.strawberry.survie.claim.manager.rank.ClaimRank
@@ -23,28 +24,28 @@ object ClaimCoopSubCommand {
         }
 
         if (claim!!.getRank(surviePlayer).p < ClaimRank.COMTE.p) {
-            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + "§cVous devez être " + ClaimRank.MARQUIS.s + " §cpour coop des personnes dans le claim ☠")
+            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.cmd.player.coop.rank").replace("{rank}", ClaimRank.MARQUIS.s))
             return false
         }
 
         val player = Survie.SURVIE.server.getPlayer(args[1])
         if (player == null) {
-            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + "§cCe joueur n'est pas connecté §l☠")
+            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.player.notonline"))
             return false
         }
 
         if (claim.coopMembers.contains(player.uniqueId)) {
-            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + "§cCe joueur est déjà coop §l☠")
+            surviePlayer.player.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.cmd.player.coop.already"))
             return false
         }
 
         claim.coop(player.uniqueId, surviePlayer.player.uniqueId)
-        surviePlayer.player.sendMessage(Survie.SURVIE.prefix + "§cVous avez coop un joueur. Attention : toutes ses actions sur votre claim sont sous VOTRE responsabilité !")
-        player.sendMessage(Survie.SURVIE.prefix + surviePlayer.player.name + "§7 vous a coop sur son claim")
+        surviePlayer.player.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation((sender as Player).uniqueId, "survie.cmd.player.coop.advert"))
+        player.sendMessage(Survie.SURVIE.prefix + StrawAPI.getAPI().l10n.getTranslation(player.uniqueId, "survie.cmd.player.coop.add").replace("{player}", surviePlayer.player.name))
 
         claim.claimMembers.forEach { t: ClaimMember? ->
             if (Survie.SURVIE.server.getPlayer(t!!.uuidMember) != null)
-                Survie.SURVIE.server.getPlayer(t.uuidMember)!!.sendMessage(Survie.SURVIE.prefix + claim.getRank(surviePlayer).s + " " + sender.name + " §7a coop §3" + player.name + " §7 dans le claim")
+                Survie.SURVIE.server.getPlayer(t.uuidMember)!!.sendMessage(Survie.SURVIE.prefix + String.format(StrawAPI.getAPI().l10n.getTranslation(t.uuidMember, "survie.cmd.player.coop.annonce"), claim.getRank(surviePlayer).s, sender.name, player.name))
         }
         return true
     }
